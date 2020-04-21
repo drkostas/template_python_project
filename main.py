@@ -9,6 +9,24 @@ from cloudstore.dropbox_cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('Main')
 
+# TODO:
+# - Argument Parser DONE
+# - Logging DONE
+# - Proper configuration that uses env variables DONE
+# - Json schema for configuration
+# - Dropbox DONE
+# - MySQL DONE
+# - README template
+# - requirements
+# - Sample setup file
+# - Tests
+# - Makefile for installation and build
+# - MongoDB
+# - Amazon S3
+# - ssh client
+# - Heroku Procfile
+# - Continuous integration
+# - Frontend
 
 def main():
     # Initializing
