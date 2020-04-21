@@ -1,19 +1,19 @@
 import traceback
 import logging
 import argparse
-from os import makedirs
+from os import makedirs, sep
 
 logger = logging.getLogger('Main')
 
 
 def main():
+    # Initializing
     args = __argparser__()
     __setup_log__(args.log, args.debug)
     logger.info("Starting")
 
 
-def __setup_log__(log_path: str, debug=False):
-    from os import sep
+def __setup_log__(log_path: str, debug: bool = False) -> None:
     if log_path is None:
         log_path = 'logs/out.log'
 
@@ -45,7 +45,6 @@ def __argparser__() -> argparse.Namespace:
     required_arguments = parser.add_argument_group('required arguments')
     config_file_params = {
         'type': argparse.FileType('r'),
-        'nargs': '+',
         'required': True,
         'help': "The configuration yml file"
     }

@@ -1,12 +1,16 @@
 from typing import List, Tuple
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, scoped_session
-from datetime import datetime
+import sqlalchemy
+import sqlalchemy.orm
 
 from .abstract_datastore import AbstractDatastore
 
 
 class MySqlDataStore(AbstractDatastore):
+    __slots__ = '__connection__', '__cursor__'
+
+    __connection__: sqlalchemy.engine
+    __cursor__: sqlalchemy.orm.scoped_session
+
     def __init__(self, username: str, password: str, hostname: str, dbname: str) -> None:
         """
         Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
@@ -21,7 +25,8 @@ class MySqlDataStore(AbstractDatastore):
                          hostname=hostname, dbname=dbname)
 
     @staticmethod
-    def get_connection(username: str, password: str, hostname: str, dbname: str) -> Tuple:
+    def get_connection(username: str, password: str, hostname: str, dbname: str) \
+            -> Tuple[sqlalchemy.engine, sqlalchemy.orm.scoped_session]:
         """
         Creates and returns a connection and a cursor/session to the MySQL DB
 
@@ -32,9 +37,9 @@ class MySqlDataStore(AbstractDatastore):
         :return:
         """
 
-        engine = create_engine("mysql://{}:{}@{}/{}".format(username, password, hostname, dbname))
-        session_obj = sessionmaker(bind=engine)
-        session = scoped_session(session_obj)
+        engine = sqlalchemy.create_engine("mysql://{}:{}@{}/{}".format(username, password, hostname, dbname))
+        session_obj = sqlalchemy.orm.sessionmaker(bind=engine)
+        session = sqlalchemy.orm.scoped_session(session_obj)
         return engine, session
 
     def create_table(self, table: str, schema: str) -> None:
