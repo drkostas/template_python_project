@@ -5,7 +5,7 @@ from os import makedirs, sep
 
 from configuration.configuration import Configuration
 # from datastore.mysql_datastore import MySqlDataStore
-# from cloudstore.dropbox_cloudstore import DropboxCloudstore
+from cloudstore.dropbox_cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('Main')
 
@@ -17,7 +17,9 @@ def main():
     logger.info("Starting")
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
-    logger.info('Dropbox Apikey: {}'.format(configuration.get_cloudstore()['api_key']))
+    # Init the Cloudstore class
+    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
+    print(cloud_store.ls(path='').keys())
 
 
 def __setup_log__(log_path: str, debug: bool = False) -> None:

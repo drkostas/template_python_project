@@ -1,4 +1,5 @@
 from typing import List, Tuple
+import logging
 import sqlalchemy
 import sqlalchemy.orm
 
@@ -10,6 +11,7 @@ class MySqlDataStore(AbstractDatastore):
 
     __connection__: sqlalchemy.engine
     __cursor__: sqlalchemy.orm.scoped_session
+    logger = logging.getLogger('MySqlDataStore')
 
     def __init__(self, username: str, password: str, hostname: str, dbname: str) -> None:
         """

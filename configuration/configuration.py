@@ -1,4 +1,5 @@
 import os
+import logging
 from typing import Dict, Tuple, Union
 import json
 import _io
@@ -19,6 +20,7 @@ class Configuration:
     CONFIG_SCHEMA_PATH: str = 'yml_schema.json'
     ENV_VARIABLE_TAG: str = '!ENV'
     ENV_VARIABLE_PATTERN: str = '.*?\${(\w+)}.*?' # ${var}
+    logger = logging.getLogger('Configuration')
 
     def __init__(self, config_src: Union[TextIOWrapper, StringIO, str]):
         """

@@ -1,13 +1,15 @@
 from typing import Dict, Any
+import logging
 from dropbox import Dropbox, files, exceptions
 
-from .abstract_cloudstore import AbstractDatastore
+from .abstract_cloudstore import AbstractCloudstore
 
 
-class DropboxCloudstore(AbstractDatastore):
+class DropboxCloudstore(AbstractCloudstore):
     __slots__ = '__handler__'
 
     __handler__: Dropbox
+    logger = logging.getLogger('DropboxCloudstore')
 
     def __init__(self, api_key: str) -> None:
         """
