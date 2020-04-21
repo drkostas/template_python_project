@@ -4,7 +4,7 @@ from dropbox import Dropbox, files, exceptions
 from .abstract_cloudstore import AbstractDatastore
 
 
-class DropboxDatastore(AbstractDatastore):
+class DropboxCloudstore(AbstractDatastore):
     __slots__ = '__handler__'
 
     __handler__: Dropbox

@@ -13,7 +13,7 @@ class MySqlDataStore(AbstractDatastore):
 
     def __init__(self, username: str, password: str, hostname: str, dbname: str) -> None:
         """
-        Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
+        The basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
 
         :param username:
         :param password:

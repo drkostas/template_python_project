@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple
 
 
-class AbstractDatastore(ABC):
+class AbstractCloudstore(ABC):
     __slots__ = '__handler__'
 
     @abstractmethod
