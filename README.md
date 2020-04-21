@@ -3,8 +3,8 @@
 ## Table of Contents
 + [About](#about)
 + [Getting Started](#getting_started)
-+ [Prerequisites](#prerequisites)
-+ [Installing](#installing)
+    + [Prerequisites](#prerequisites)
+    + [Installing](#installing)
 + [Running the tests](#tests)
 + [Deployment](#deployment)
 + [Built With](#built_with)
