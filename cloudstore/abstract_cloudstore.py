@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple
 
 
 class AbstractCloudstore(ABC):
@@ -20,7 +19,6 @@ class AbstractCloudstore(ABC):
         """
         Returns a Cloudstore handler.
 
-        :param self:
         :param args:
         :param kwargs:
         :return:

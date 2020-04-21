@@ -26,9 +26,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
         Returns a Cloudstore handler.
 
-        :param self:
-        :param args:
-        :param kwargs:
+        :param api_key:
         :return:
         """
 

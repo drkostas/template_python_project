@@ -4,7 +4,7 @@ import argparse
 from os import makedirs, sep
 
 from configuration.configuration import Configuration
-# from datastore.mysql_datastore import MySqlDataStore
+from datastore.mysql_datastore import MySqlDataStore
 from cloudstore.dropbox_cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('Main')
@@ -17,8 +17,14 @@ def main():
     logger.info("Starting")
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
-    # Init the Cloudstore class
+    # Init the Cloudstore
     cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
+    # Init the Datastore
+    data_store = MySqlDataStore(**configuration.get_datastore())
+
+    print(data_store.show_tables())
+    data_store.__exit__()
+
     print(cloud_store.ls(path='').keys())
 
 

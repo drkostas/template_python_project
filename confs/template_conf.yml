@@ -5,7 +5,7 @@ cloudstore:
   type: dropbox
 datastore:
   config:
-    host: !ENV ${MYSQL_HOST}
+    hostname: !ENV ${MYSQL_HOST}
     username: !ENV ${MYSQL_USERNAME}
     password: !ENV ${MYSQL_PASSWORD}
     db_name: !ENV ${MYSQL_DB_NAME}

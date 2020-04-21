@@ -1,30 +1,30 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple
+from typing import List
+
 
 class AbstractDatastore(ABC):
     __slots__ = ('__connection__', '__cursor__')
 
     @abstractmethod
-    def __init__(self, username: str, password: str, hostname: str, dbname: str) -> None:
+    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
         """
         Tha basic constructor. Creates a new instance of a Datastore using the specified credentials
 
         :param username:
         :param password:
         :param hostname:
-        :param dbname:
+        :param db_name:
+        :param port:
         """
 
         self.__connection__, self.__cursor__ = self.get_connection(username=username, password=password,
                                                                    hostname=hostname,
-                                                                   dbname=dbname)
+                                                                   db_name=db_name,
+                                                                   port=port)
+
     @staticmethod
     @abstractmethod
-    def get_connection(username: str, password: str, hostname: str, dbname: str) -> Tuple:
-        pass
-
-    @abstractmethod
-    def __exit__(self):
+    def get_connection(username: str, password: str, hostname: str, db_name: str, port: int):
         pass
 
     @abstractmethod
@@ -54,4 +54,8 @@ class AbstractDatastore(ABC):
 
     @abstractmethod
     def delete_from_table(self, table: str, where: str) -> None:
+        pass
+
+    @abstractmethod
+    def show_tables(self, *args, **kwargs) -> List:
         pass

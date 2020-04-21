@@ -37,13 +37,13 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "host",
+            "hostname",
             "username",
             "password",
             "db_name"
           ],
           "properties": {
-            "host": {
+            "hostname": {
               "type": "string"
             },
             "username": {

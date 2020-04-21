@@ -17,9 +17,9 @@ class Configuration:
     datastore: Dict
     cloudstore: Dict
     tag: str
-    CONFIG_SCHEMA_PATH: str = 'yml_schema.json'
-    ENV_VARIABLE_TAG: str = '!ENV'
-    ENV_VARIABLE_PATTERN: str = '.*?\${(\w+)}.*?' # ${var}
+    config_schema_path: str = 'yml_schema.json'
+    env_variable_tag: str = '!ENV'
+    env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
     logger = logging.getLogger('Configuration')
 
     def __init__(self, config_src: Union[TextIOWrapper, StringIO, str]):
@@ -30,11 +30,12 @@ class Configuration:
         """
 
         # Load the predefined schema of the configuration
-        CONFIGURATION_SCHEMA = self.load_configuration_schema(config_schema_path=self.CONFIG_SCHEMA_PATH)
+        configuration_schema = self.load_configuration_schema(config_schema_path=self.config_schema_path)
         # Load the configuration
-        self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.ENV_VARIABLE_TAG, env_pattern=self.ENV_VARIABLE_PATTERN)
+        self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.env_variable_tag,
+                                                      env_pattern=self.env_variable_pattern)
         # Validate the config
-        validate_json_schema(self.config, CONFIGURATION_SCHEMA)
+        validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
         self.datastore = self.config['datastore']
         self.cloudstore = self.config['cloudstore']
@@ -43,8 +44,8 @@ class Configuration:
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
         with open('/'.join([os.path.dirname(os.path.realpath(__file__)), config_schema_path])) as f:
-            CONFIGURATION_SCHEMA = json.load(f)
-        return CONFIGURATION_SCHEMA
+            configuration_schema = json.load(f)
+        return configuration_schema
 
     @staticmethod
     def load_yml(config_src: Union[TextIOWrapper, StringIO, str], env_tag: str, env_pattern: str) -> Tuple[Dict, str]:
