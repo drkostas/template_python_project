@@ -53,6 +53,18 @@ class AbstractDatastore(ABC):
         pass
 
     @abstractmethod
+    def delete_file(self, *args, **kwargs):
+        """
+        Deletes a file from the Cloudstore
+
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        pass
+
+    @abstractmethod
     def ls(self, *args, **kwargs):
         """
         List the files and folders in the Cloudstore

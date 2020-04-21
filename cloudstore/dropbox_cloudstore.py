@@ -68,6 +68,19 @@ class DropboxDatastore(AbstractDatastore):
             print('*** HTTP error', err)
             return None
 
+    def delete_file(self, file_path: str) -> None:
+        """
+        Deletes a file from the Cloudstore
+
+        :param file_path:
+        :return:
+        """
+
+        try:
+            self.__handler__.files_delete_v2(path=file_path)
+        except exceptions.ApiError as err:
+            print('*** API error', err)
+
     def ls(self, path: str = '') -> Dict:
         """
         List the files and folders in the Cloudstore
