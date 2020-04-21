@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple
 
 class AbstractDatastore(ABC):
-    __slots__ = '__connection__', '__cursor__'
+    __slots__ = ('__connection__', '__cursor__')
 
     @abstractmethod
     def __init__(self, username: str, password: str, hostname: str, dbname: str) -> None:

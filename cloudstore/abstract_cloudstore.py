@@ -3,7 +3,7 @@ from typing import List, Tuple
 
 
 class AbstractCloudstore(ABC):
-    __slots__ = '__handler__'
+    __slots__ = ('__handler__',)
 
     @abstractmethod
     def __init__(self, *args, **kwargs) -> None:

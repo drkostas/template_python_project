@@ -6,7 +6,7 @@ from .abstract_datastore import AbstractDatastore
 
 
 class MySqlDataStore(AbstractDatastore):
-    __slots__ = '__connection__', '__cursor__'
+    __slots__ = ('__connection__', '__cursor__')
 
     __connection__: sqlalchemy.engine
     __cursor__: sqlalchemy.orm.scoped_session

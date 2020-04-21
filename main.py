@@ -3,6 +3,10 @@ import logging
 import argparse
 from os import makedirs, sep
 
+from configuration.configuration import Configuration
+# from datastore.mysql_datastore import MySqlDataStore
+# from cloudstore.dropbox_cloudstore import DropboxCloudstore
+
 logger = logging.getLogger('Main')
 
 
@@ -11,6 +15,9 @@ def main():
     args = __argparser__()
     __setup_log__(args.log, args.debug)
     logger.info("Starting")
+    # Load the configuration
+    configuration = Configuration(config_src=args.config_file)
+    logger.info('Dropbox Apikey: {}'.format(configuration.get_cloudstore()['api_key']))
 
 
 def __setup_log__(log_path: str, debug: bool = False) -> None:
