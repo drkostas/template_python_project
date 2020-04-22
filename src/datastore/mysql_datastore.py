@@ -49,8 +49,6 @@ class MySqlDataStore(AbstractDatastore):
         )
 
         cursor = connection.cursor()
-        print(type(connection))
-        print(type(cursor))
 
         return connection, cursor
 
@@ -64,7 +62,7 @@ class MySqlDataStore(AbstractDatastore):
         :return:
         """
 
-        query = "CREATE TABLE {table} ({schema})".format(table=table, schema=schema)
+        query = "CREATE TABLE IF NOT EXISTS {table} ({schema})".format(table=table, schema=schema)
         self.__cursor__.execute(query)
         self.__connection__.commit()
 

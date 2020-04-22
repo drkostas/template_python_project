@@ -7,6 +7,7 @@
     + [Installing](#installing)
 + [Running the tests](#tests)
 + [Deployment](#deployment)
++ [Todo](#todo)
 + [Built With](#built_with)
 + [License](#license)
 + [Acknowledgments](#acknowledgments)
@@ -56,6 +57,10 @@ Give an example
 ## Deployment <a name = "deployment"></a>
 
 Add additional notes about how to deploy this on a live system
+
+## TODO <a name = "todo"></a>
+
+See the the [TODO](TODO.md) for the current task list
 
 ## Built With <a name = "built_with"></a>
 

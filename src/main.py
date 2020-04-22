@@ -3,9 +3,9 @@ import logging
 import argparse
 from os import makedirs, sep
 
-from src.configuration.configuration import Configuration
-from src.datastore import MySqlDataStore
-from src.cloudstore import DropboxCloudstore
+from configuration.configuration import Configuration
+from datastore.mysql_datastore import MySqlDataStore
+from cloudstore.dropbox_cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('Main')
 
@@ -60,6 +60,13 @@ def _argparser() -> argparse.Namespace:
 
 
 def main():
+    """
+    :Example:
+    python main.py -m run_mode_1
+                   -c ../confs/template_conf.yml
+                   -l ../logs/out.log
+    """
+
     # Initializing
     args = _argparser()
     _setup_log(args.log, args.debug)
@@ -71,10 +78,10 @@ def main():
     # Init the Datastore
     data_store = MySqlDataStore(**configuration.get_datastore())
 
-    print(data_store.show_tables())
-    data_store.__exit__()
+    logger.info("Tables in current DB: {0}".format(list(data_store.show_tables())))
+    logger.info("List of files in Dropbox root: {0}".format(list(cloud_store.ls(path='').keys())))
 
-    print(cloud_store.ls(path='').keys())
+    data_store.__exit__()
 
 
 if __name__ == '__main__':
