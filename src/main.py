@@ -10,10 +10,7 @@ from cloudstore.dropbox_cloudstore import DropboxCloudstore
 logger = logging.getLogger('Main')
 
 
-def _setup_log(log_path: str, debug: bool = False) -> None:
-    if log_path is None:
-        log_path = '../logs/out.log'
-
+def _setup_log(log_path: str = '../logs/out.log', debug: bool = False) -> None:
     log_path = log_path.split(sep)
     if len(log_path) > 1:
 

@@ -17,12 +17,11 @@ class Configuration:
     datastore: Dict
     cloudstore: Dict
     tag: str
-    config_schema_path: str = 'yml_schema.json'
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
     logger = logging.getLogger('Configuration')
 
-    def __init__(self, config_src: Union[TextIOWrapper, StringIO, str]):
+    def __init__(self, config_src: Union[TextIOWrapper, StringIO, str], config_schema_path: str = 'yml_schema.json'):
         """
         Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
 
@@ -30,7 +29,7 @@ class Configuration:
         """
 
         # Load the predefined schema of the configuration
-        configuration_schema = self.load_configuration_schema(config_schema_path=self.config_schema_path)
+        configuration_schema = self.load_configuration_schema(config_schema_path=config_schema_path)
         # Load the configuration
         self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
@@ -97,7 +96,7 @@ class Configuration:
     def get_cloudstore(self) -> Dict:
         return self.cloudstore['config']
 
-    def to_yml(self, fn, include_tag=False) -> None:
+    def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:
         """
         Writes the configuration to a stream. For example a file.
 
@@ -107,7 +106,7 @@ class Configuration:
         """
 
         dict_conf = {
-            'datatore': self.datastore,
+            'datastore': self.datastore,
             'cloudstore': self.cloudstore
         }
         if include_tag:
@@ -126,7 +125,8 @@ class Configuration:
     def to_json(self) -> Dict:
         return {
             'datatore': self.datastore,
-            'cloudstore': self.cloudstore
+            'cloudstore': self.cloudstore,
+            'tag': self.tag
         }
 
 
