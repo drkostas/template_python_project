@@ -3,52 +3,16 @@ import logging
 import argparse
 from os import makedirs, sep
 
-from configuration.configuration import Configuration
-from datastore.mysql_datastore import MySqlDataStore
-from cloudstore.dropbox_cloudstore import DropboxCloudstore
+from src.configuration.configuration import Configuration
+from src.datastore import MySqlDataStore
+from src.cloudstore import DropboxCloudstore
 
 logger = logging.getLogger('Main')
 
-# TODO:
-# - Argument Parser DONE
-# - Logging DONE
-# - Proper configuration that uses env variables DONE
-# - Json schema for configuration
-# - Dropbox DONE
-# - MySQL DONE
-# - README template
-# - requirements
-# - Sample setup file
-# - Tests
-# - Makefile for installation and build
-# - MongoDB
-# - Amazon S3
-# - ssh client
-# - Heroku Procfile
-# - Continuous integration
-# - Frontend
 
-def main():
-    # Initializing
-    args = __argparser__()
-    __setup_log__(args.log, args.debug)
-    logger.info("Starting")
-    # Load the configuration
-    configuration = Configuration(config_src=args.config_file)
-    # Init the Cloudstore
-    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
-    # Init the Datastore
-    data_store = MySqlDataStore(**configuration.get_datastore())
-
-    print(data_store.show_tables())
-    data_store.__exit__()
-
-    print(cloud_store.ls(path='').keys())
-
-
-def __setup_log__(log_path: str, debug: bool = False) -> None:
+def _setup_log(log_path: str, debug: bool = False) -> None:
     if log_path is None:
-        log_path = 'logs/out.log'
+        log_path = '../logs/out.log'
 
     log_path = log_path.split(sep)
     if len(log_path) > 1:
@@ -70,7 +34,7 @@ def __setup_log__(log_path: str, debug: bool = False) -> None:
                         )
 
 
-def __argparser__() -> argparse.Namespace:
+def _argparser() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description='A description of the project',
         add_help=False)
@@ -93,6 +57,24 @@ def __argparser__() -> argparse.Namespace:
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
 
     return parser.parse_args()
+
+
+def main():
+    # Initializing
+    args = _argparser()
+    _setup_log(args.log, args.debug)
+    logger.info("Starting")
+    # Load the configuration
+    configuration = Configuration(config_src=args.config_file)
+    # Init the Cloudstore
+    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
+    # Init the Datastore
+    data_store = MySqlDataStore(**configuration.get_datastore())
+
+    print(data_store.show_tables())
+    data_store.__exit__()
+
+    print(cloud_store.ls(path='').keys())
 
 
 if __name__ == '__main__':
