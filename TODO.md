@@ -7,7 +7,7 @@
 1. ~~MySQL/Datastore Class~~
 1. ~~Create README template~~
 1. ~~Generate requirements.txt~~
-1. UnitTests for the current classes
+1. ~~UnitTests for the current classes~~
 1. Sample setup file
 1. Makefile for installation and build
 1. Heroku Procfile

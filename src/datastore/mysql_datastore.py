@@ -6,14 +6,14 @@ from mysql import connector as mysql_connector
 from .abstract_datastore import AbstractDatastore
 
 
-class MySqlDataStore(AbstractDatastore):
+class MySqlDatastore(AbstractDatastore):
     __slots__ = ('__connection__', '__cursor__')
 
     __connection__: mysql_connector.connection_cext.CMySQLConnection
     __cursor__: mysql_connector.connection_cext.CMySQLCursor
     logger = logging.getLogger('MySqlDataStore')
 
-    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
+    def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int = 3306) -> None:
         """
         The basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
 
@@ -28,7 +28,7 @@ class MySqlDataStore(AbstractDatastore):
                          hostname=hostname, db_name=db_name, port=port)
 
     @staticmethod
-    def get_connection(username: str, password: str, hostname: str, db_name: str, port: int) \
+    def get_connection(username: str, password: str, hostname: str, db_name: str, port: int = 3306) \
             -> Tuple[mysql_connector.connection_cext.CMySQLConnection, mysql_connector.connection_cext.CMySQLCursor]:
         """
         Creates and returns a connection and a cursor/session to the MySQL DB
@@ -172,7 +172,7 @@ class MySqlDataStore(AbstractDatastore):
         self.__cursor__.execute(query)
         results = self.__cursor__.fetchall()
 
-        return results
+        return [result[0] for result in results]
 
     def __exit__(self) -> None:
         """
