@@ -42,7 +42,6 @@ class TestConfiguration(unittest.TestCase):
         self.logger.info('Comparing the results..')
         self.assertDictEqual(expected_json, configuration.to_json())
 
-
     def test_to_yaml(self):
         self.logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
@@ -68,7 +67,6 @@ class TestConfiguration(unittest.TestCase):
             'type': 'mysql'}, 'cloudstore': {'config': {'api_key': 'changed_api'}, 'type': 'dropbox'}}
         self.assertDictEqual(expected_json, modified_configuration.to_json())
 
-
     @staticmethod
     def _setup_log(debug: bool = False) -> None:
         # noinspection PyArgumentList
@@ -79,21 +77,17 @@ class TestConfiguration(unittest.TestCase):
                                       ]
                             )
 
-
     @classmethod
     def setUp(cls) -> None:
         pass
-
 
     @classmethod
     def tearDown(cls) -> None:
         pass
 
-
     @classmethod
     def setUpClass(cls):
         cls._setup_log()
-
 
     @classmethod
     def tearDownClass(cls):

@@ -13,7 +13,7 @@
 1. Heroku Procfile
 1. Continuous integration
 1. Modify Readme to match the instruction for this project
-1. ssh client
+1. Ssh client
 1. MongoDB/Datastore Class
 1. Amazon S3/Cloudstore CLass
 1. Frontend

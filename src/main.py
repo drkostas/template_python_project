@@ -75,8 +75,41 @@ def main():
     # Init the Datastore
     data_store = MySqlDataStore(**configuration.get_datastore())
 
-    logger.info("Tables in current DB: {0}".format(list(data_store.show_tables())))
-    logger.info("List of files in Dropbox root: {0}".format(list(cloud_store.ls(path='').keys())))
+    # Mysql examples
+    logger.info("\n\nMYSQL EXAMPLE\n-------------------------")
+    logger.info("\n\nTables in current DB: {0}".format(list(data_store.show_tables())))
+    logger.info("Creating Table: orders")
+    table_schema = """  order_id INT(6) PRIMARY KEY,
+                        order_type VARCHAR(30) NOT NULL,
+                        location VARCHAR(30) NOT NULL"""
+    data_store.create_table(table='orders', schema=table_schema)
+    logger.info("Tables in current DB:\n{0}".format(list(data_store.show_tables())))
+    logger.info("Inserting into orders the values:\n(1 simple newyork)..")
+    insert_data = {"order_id": 1,
+                   "order_type": "plain",
+                   "location": "new_york"}
+    data_store.insert_into_table(table='orders', data=insert_data)
+    logger.info("SELECT * FROM orders;\n{0}".format(data_store.select_from_table(table='orders')))
+    logger.info("Deleting the inserted row from table orders..")
+    data_store.delete_from_table(table='orders', where='order_id=1')
+    logger.info("SELECT * FROM orders;\n{0}".format(data_store.select_from_table(table='orders')))
+    logger.info("Dropping Table: orders")
+    data_store.drop_table(table='orders')
+    logger.info("Tables in current DB:\n{0}".format(list(data_store.show_tables())))
+
+    # Dropbox examples
+    logger.info("\n\nDROPBOX EXAMPLE\n-------------------------")
+    logger.info("List of files in Dropbox /python_template:\n{0}".format(list(cloud_store.ls(path='/python_template').keys())))
+    upload_path = "/python_template/file1.txt"
+    file_content = "test file content"
+    logger.info("Uploading file {file} with content:\n{content}".format(file=upload_path, content=file_content))
+    cloud_store.upload_file(file_stream=file_content.encode(), upload_path=upload_path)
+    logger.info("List of files in Dropbox /python_template:\n{0}".format(list(cloud_store.ls(path='/python_template').keys())))
+    downloaded_file = cloud_store.download_file(frompath=upload_path)
+    logger.info("Downloaded file and its content is:\n{0}".format(downloaded_file))
+    cloud_store.delete_file(file_path=upload_path)
+    logger.info("Deleting file {file}..".format(file=upload_path))
+    logger.info("List of files in Dropbox /python_template:\n{0}".format(list(cloud_store.ls(path='/python_template').keys())))
 
     data_store.__exit__()
 
