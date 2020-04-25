@@ -1,6 +1,6 @@
 from setuptools import setup
 import sys
-import subprocess
+#import subprocess
 
 LOCAL_ARG = '--local'
 

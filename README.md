@@ -7,7 +7,7 @@
 + [Getting Started](#getting_started)
     + [Prerequisites](#prerequisites)
     + [Environment Variables](#env_variables)
-+ [Installing, Testing, Building](#h)
++ [Installing, Testing, Building](#installing)
     + [Available Make Commands](#check_make_commamnds)
     + [Clean Previous Builds](#clean_previous)
     + [Venv and Requirements](#venv_requirements)
@@ -50,7 +50,7 @@ echo $SHELL
 ### Set the required environment variables <a name = "env_variables"></a>
 
 In order to run the [main.py](main.py) or the tests you will need to set the following 
-environmental variables in you system:
+environmental variables in your system:
 
 ```bash
 $ export DROPBOX_API_KEY=<VALUE>
@@ -73,7 +73,7 @@ make install server=local
 
 <i>If you executed the previous command, you can skip through to the [Running locally](#run_locally) section.</i>
 
-#### Check the available make commands <a name = "check_make_commamnds"></a>
+### Check the available make commands <a name = "check_make_commamnds"></a>
 
 ```bash
 $ make help
