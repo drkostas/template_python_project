@@ -7,6 +7,12 @@ jobs: # A basic unit of work in a run
       # CircleCI Python images available at: https://hub.docker.com/r/circleci/python/
       - image: circleci/python:3.6.9
     steps: # steps that comprise the `build` job
+      - run: sudo apt-get install mysql-server
+      - run: sudo apt-get install mysql-client
+      - run: sudo apt-get install libmysqlclient15-dev
       - checkout # check out source code to working directory
-      - run: ls
-      - run: make install
+      - run: make clean
+      - run: make create_venv
+      - run: make requirements
+      - run: make run_tests
+      - run: make setup
