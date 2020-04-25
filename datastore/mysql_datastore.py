@@ -45,7 +45,8 @@ class MySqlDatastore(AbstractDatastore):
             host=hostname,
             user=username,
             passwd=password,
-            database=db_name
+            database=db_name,
+            use_pure=True
         )
 
         cursor = connection.cursor()
