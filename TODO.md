@@ -10,7 +10,7 @@
 1. ~~UnitTests for the current classes~~
 1. ~~Sample setup file~~
 1. ~~Makefile for installation and build~~
-1. Continuous integration
+1. ~~Continuous integration~~
 1. Heroku Procfile
 1. Modify Readme to match the instruction for this project
 1. Ssh client
