@@ -98,7 +98,7 @@ class TestDropboxCloudstore(unittest.TestCase):
             raise Exception('DROPBOX_API_KEY env variable is not set!')
         logger.info('Loading Configuration..')
         cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'),
-                                          config_schema_path=os.path.join('..', '..', 'tests', cls.test_data_path,
+                                          config_schema_path=os.path.join('..', 'tests', cls.test_data_path,
                                                                           'yml_schema.json'))
 
     @classmethod

@@ -105,7 +105,7 @@ class TestMysqlDatastore(unittest.TestCase):
             raise Exception('Mysql env variables are not set!')
         logger.info('Loading Configuration..')
         cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'),
-                                          config_schema_path=os.path.join('..', '..', 'tests', cls.test_data_path,
+                                          config_schema_path=os.path.join('..', 'tests', cls.test_data_path,
                                                                           'yml_schema.json'))
         cls.test_table_schema = """ order_id INT(6) PRIMARY KEY,
                                     order_type VARCHAR(30) NOT NULL,

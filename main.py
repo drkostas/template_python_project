@@ -10,7 +10,7 @@ from cloudstore.dropbox_cloudstore import DropboxCloudstore
 logger = logging.getLogger('Main')
 
 
-def _setup_log(log_path: str = '../logs/out.log', debug: bool = False) -> None:
+def _setup_log(log_path: str = 'logs/out.log', debug: bool = False) -> None:
     log_path = log_path.split(sep)
     if len(log_path) > 1:
 
@@ -33,7 +33,7 @@ def _setup_log(log_path: str = '../logs/out.log', debug: bool = False) -> None:
 
 def _argparser() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description='A description of the project',
+        description='A template for python projects.',
         add_help=False)
     # Required Args
     required_arguments = parser.add_argument_group('required arguments')
@@ -60,8 +60,8 @@ def main():
     """
     :Example:
     python main.py -m run_mode_1
-                   -c ../confs/template_conf.yml
-                   -l ../logs/out.log
+                   -c confs/template_conf.yml
+                   -l logs/out.log
     """
 
     # Initializing

@@ -780,3 +780,87 @@ b'test file content'
 2020-04-23 22:12:57 dropbox      INFO     Request to files/list_folder
 2020-04-23 22:12:57 Main         INFO     List of files in Dropbox /python_template:
 []
+2020-04-25 18:18:20 Main         INFO     Starting
+2020-04-25 18:18:22 Main         INFO     
+
+MYSQL EXAMPLE
+-------------------------
+2020-04-25 18:18:22 Main         INFO     
+
+Tables in current DB: ['test_table']
+2020-04-25 18:18:22 Main         INFO     Creating Table: orders
+2020-04-25 18:18:23 Main         INFO     Tables in current DB:
+['orders', 'test_table']
+2020-04-25 18:18:23 Main         INFO     Inserting into orders the values:
+(1 simple newyork)..
+2020-04-25 18:18:23 Main         INFO     SELECT * FROM orders;
+[(1, 'plain', 'new_york')]
+2020-04-25 18:18:23 Main         INFO     Deleting the inserted row from table orders..
+2020-04-25 18:18:23 Main         INFO     SELECT * FROM orders;
+[]
+2020-04-25 18:18:23 Main         INFO     Dropping Table: orders
+2020-04-25 18:18:24 Main         INFO     Tables in current DB:
+['test_table']
+2020-04-25 18:18:24 Main         INFO     
+
+DROPBOX EXAMPLE
+-------------------------
+2020-04-25 18:18:24 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:18:25 Main         INFO     List of files in Dropbox /python_template:
+[]
+2020-04-25 18:18:25 Main         INFO     Uploading file /python_template/file1.txt with content:
+test file content
+2020-04-25 18:18:25 dropbox      INFO     Request to files/upload
+2020-04-25 18:18:26 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:18:26 Main         INFO     List of files in Dropbox /python_template:
+['file1.txt']
+2020-04-25 18:18:26 dropbox      INFO     Request to files/download
+2020-04-25 18:18:27 Main         INFO     Downloaded file and its content is:
+b'test file content'
+2020-04-25 18:18:27 dropbox      INFO     Request to files/delete_v2
+2020-04-25 18:18:28 Main         INFO     Deleting file /python_template/file1.txt..
+2020-04-25 18:18:28 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:18:28 Main         INFO     List of files in Dropbox /python_template:
+[]
+2020-04-25 18:32:03 Main         INFO     Starting
+2020-04-25 18:32:06 Main         INFO     
+
+MYSQL EXAMPLE
+-------------------------
+2020-04-25 18:32:06 Main         INFO     
+
+Tables in current DB: ['test_table']
+2020-04-25 18:32:06 Main         INFO     Creating Table: orders
+2020-04-25 18:32:06 Main         INFO     Tables in current DB:
+['orders', 'test_table']
+2020-04-25 18:32:06 Main         INFO     Inserting into orders the values:
+(1 simple newyork)..
+2020-04-25 18:32:07 Main         INFO     SELECT * FROM orders;
+[(1, 'plain', 'new_york')]
+2020-04-25 18:32:07 Main         INFO     Deleting the inserted row from table orders..
+2020-04-25 18:32:07 Main         INFO     SELECT * FROM orders;
+[]
+2020-04-25 18:32:07 Main         INFO     Dropping Table: orders
+2020-04-25 18:32:08 Main         INFO     Tables in current DB:
+['test_table']
+2020-04-25 18:32:08 Main         INFO     
+
+DROPBOX EXAMPLE
+-------------------------
+2020-04-25 18:32:08 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:32:08 Main         INFO     List of files in Dropbox /python_template:
+[]
+2020-04-25 18:32:08 Main         INFO     Uploading file /python_template/file1.txt with content:
+test file content
+2020-04-25 18:32:08 dropbox      INFO     Request to files/upload
+2020-04-25 18:32:10 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:32:10 Main         INFO     List of files in Dropbox /python_template:
+['file1.txt']
+2020-04-25 18:32:10 dropbox      INFO     Request to files/download
+2020-04-25 18:32:11 Main         INFO     Downloaded file and its content is:
+b'test file content'
+2020-04-25 18:32:11 dropbox      INFO     Request to files/delete_v2
+2020-04-25 18:32:12 Main         INFO     Deleting file /python_template/file1.txt..
+2020-04-25 18:32:12 dropbox      INFO     Request to files/list_folder
+2020-04-25 18:32:12 Main         INFO     List of files in Dropbox /python_template:
+[]

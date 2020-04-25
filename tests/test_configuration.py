@@ -15,7 +15,7 @@ class TestConfiguration(unittest.TestCase):
         try:
             logger.info('Loading the correct Configuration..')
             Configuration(config_src=os.path.join(self.test_data_path, 'minimal_conf_correct.yml'),
-                          config_schema_path=os.path.join('..', '..', 'tests', self.test_data_path,
+                          config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                                           'minimal_yml_schema.json'))
         except ValidationError as e:
             logger.error('Error validating the correct yml: %s', e)
@@ -26,14 +26,14 @@ class TestConfiguration(unittest.TestCase):
         with self.assertRaises(ValidationError):
             logger.info('Loading the wrong Configuration..')
             Configuration(config_src=os.path.join(self.test_data_path, 'minimal_conf_wrong.yml'),
-                          config_schema_path=os.path.join('..', '..', 'tests', self.test_data_path,
+                          config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                                           'minimal_yml_schema.json'))
         logger.info('Second yml failed to validate successfully.')
 
     def test_to_json(self):
         logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
-                                      config_schema_path=os.path.join('..', '..', 'tests', self.test_data_path,
+                                      config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                                                       'yml_schema.json'))
         expected_json = {'tag': 'production', 'datatore': {
             'config': {'hostname': 'host123', 'username': 'user1', 'password': 'pass2', 'db_name': 'db3', 'port': 3306},
@@ -45,7 +45,7 @@ class TestConfiguration(unittest.TestCase):
     def test_to_yaml(self):
         logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
-                                      config_schema_path=os.path.join('..', '..', 'tests', self.test_data_path,
+                                      config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                                                       'yml_schema.json'))
         # Modify and export yml
         logger.info('Changed the host and the api_key..')
@@ -57,7 +57,7 @@ class TestConfiguration(unittest.TestCase):
         logger.info('Loading the exported yaml..')
         modified_configuration = Configuration(
             config_src=os.path.join(self.test_data_path, 'actual_output_to_yaml.yml'),
-            config_schema_path=os.path.join('..', '..', 'tests', self.test_data_path,
+            config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                             'yml_schema.json'))
         # Compare
         logger.info('Comparing the results..')
