@@ -1,0 +1,1 @@
+worker: python main.py -m run_mode_1 -c confs/template_conf.yml -l logs/out.log

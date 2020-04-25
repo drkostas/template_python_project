@@ -67,7 +67,7 @@ def main():
     # Initializing
     args = _argparser()
     _setup_log(args.log, args.debug)
-    logger.info("Starting")
+    logger.info("Starting in run mode: {0}".format(args.run_mode))
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
     # Init the Cloudstore
