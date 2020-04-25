@@ -2,7 +2,7 @@ from setuptools import setup
 import sys
 import subprocess
 
-local_arg = '--local'
+LOCAL_ARG = '--local'
 
 # Required Version: Python3.6
 if sys.version_info < (3, 6):
@@ -13,16 +13,16 @@ with open('requirements.txt') as f:
     requirements = f.readlines()
 
 # For the cases you want a different package to be installed on local and prod environments
-# if local_arg in sys.argv:
-#     index = sys.argv.index(local_arg)  # Index of the local argument
-#     sys.argv.pop(index)  # Removes the local argument
-#     subprocess.check_call([sys.executable, "-m", "pip", "install", 'mysql-connector-python==8.0.19'])
-# else:
-#     subprocess.check_call([sys.executable, "-m", "pip", "install", 'something else'])
+if LOCAL_ARG in sys.argv:
+    index = sys.argv.index(LOCAL_ARG)  # Index of the local argument
+    sys.argv.pop(index)  # Removes the local argument in order to prevent the setup() error
+    # subprocess.check_call([sys.executable, "-m", "pip", "install", 'A package that works locally'])
+else:
+    # subprocess.check_call([sys.executable, "-m", "pip", "install", 'A package that works on production'])
+    pass
 
 # Run the Setup
 setup(
-
     name='template_python_project',
     version='0.1',
     # package_dir={'': '.'},
