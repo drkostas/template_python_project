@@ -1,4 +1,6 @@
 # Project Title
+[![CircleCI](https://circleci.com/gh/drkostas/template_python_project/tree/master.svg?style=svg)](https://circleci.com/gh/drkostas/template_python_project/tree/master)
+[![GitHub license](https://img.shields.io/badge/license-GNU-blue.svg)](https://raw.githubusercontent.com/drkostas/template_python_project/master/LICENSE)
 
 ## Table of Contents
 + [About](#about)
