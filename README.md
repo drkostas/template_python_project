@@ -58,6 +58,8 @@ $ export MYSQL_HOST=<VALUE>
 $ export MYSQL_USERNAME=<VALUE>
 $ export MYSQL_PASSWORD=<VALUE>
 $ export MYSQL_DB_NAME=<VALUE>
+$ export EMAIL_ADDRESS=<VALUE>
+$ export GMAIL_API_KEY=<VALUE>
 ```
 
 ## Installing, Testing, Building <a name = "installing"></a>
@@ -190,6 +192,11 @@ datastore:
     db_name: !ENV ${MYSQL_DB_NAME}
     port: 3306
   type: mysql
+email_app:
+  config:
+    email_address: !ENV ${EMAIL_ADDRESS}
+    api_key: !ENV ${GMAIL_API_KEY}
+  type: gmail
 ```
 
 The `!ENV` flag indicates that a envirnonmental value follows. 
@@ -274,13 +281,14 @@ Read the [TODO](TODO.md) to see the current task list.
 
 * [SQLAlchemy](https://pypi.org/project/SQLAlchemy/) - Used for the Datastore Class
 * [Dropbpox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
+* [Gmail Sender](https://github.com/paulc/gmail-sender) - Used for the EmailApp Class
 * [Heroku](https://www.heroku.com) - The deployment environment
 * [CircleCI](https://www.circleci.com/) - Continuous Integration service
 
 
 ## License <a name = "license"></a>
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments <a name = "acknowledgments"></a>
 
