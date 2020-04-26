@@ -33,16 +33,16 @@ class TestConfiguration(unittest.TestCase):
         logger.info('Loading Configuration..')
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         expected_json = {'tag': 'production',
-                         'datastore': {'config':
-                                           {'hostname': 'host123',
-                                            'username': 'user1',
-                                            'password': 'pass2',
-                                            'db_name': 'db3',
-                                            'port': 3306},
-                                       'type': 'mysql'},
-                         'cloudstore': {'config':
-                                            {'api_key': 'apiqwerty'},
-                                        'type': 'dropbox'}}
+                         'datastore': [{'config':
+                                            {'hostname': 'host123',
+                                             'username': 'user1',
+                                             'password': 'pass2',
+                                             'db_name': 'db3',
+                                             'port': 3306},
+                                        'type': 'mysql'}],
+                         'cloudstore': [{'config':
+                                             {'api_key': 'apiqwerty'},
+                                         'type': 'dropbox'}]}
         # Compare
         logger.info('Comparing the results..')
         self.assertDictEqual(self._sort_dict(expected_json), self._sort_dict(configuration.to_json()))
@@ -52,8 +52,8 @@ class TestConfiguration(unittest.TestCase):
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         # Modify and export yml
         logger.info('Changed the host and the api_key..')
-        configuration.datastore['config']['hostname'] = 'changedhost'
-        configuration.cloudstore['config']['api_key'] = 'changed_api'
+        configuration.datastore[0]['config']['hostname'] = 'changedhost'
+        configuration.cloudstore[0]['config']['api_key'] = 'changed_api'
         logger.info('Exporting to yaml..')
         configuration.to_yaml('test_data/test_configuration/actual_output_to_yaml.yml', include_tag=True)
         # Load the modified yml
@@ -63,16 +63,16 @@ class TestConfiguration(unittest.TestCase):
         # Compare
         logger.info('Comparing the results..')
         expected_json = {'tag': 'production',
-                         'datastore': {'config':
-                                           {'hostname': 'changedhost',
-                                            'username': 'user1',
-                                            'password': 'pass2',
-                                            'db_name': 'db3',
-                                            'port': 3306},
-                                       'type': 'mysql'},
-                         'cloudstore': {'config':
-                                            {'api_key': 'changed_api'},
-                                        'type': 'dropbox'}}
+                         'datastore': [{'config':
+                                            {'hostname': 'changedhost',
+                                             'username': 'user1',
+                                             'password': 'pass2',
+                                             'db_name': 'db3',
+                                             'port': 3306},
+                                        'type': 'mysql'}],
+                         'cloudstore': [{'config':
+                                             {'api_key': 'changed_api'},
+                                         'type': 'dropbox'}]}
         self.assertDictEqual(self._sort_dict(expected_json), self._sort_dict(modified_configuration.to_json()))
 
     @classmethod

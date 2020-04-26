@@ -22,7 +22,7 @@ class TestGmailEmailApp(unittest.TestCase):
     def test_connect(self):
         # Test the connection with the correct api key
         try:
-            gmail_configuration = self.configuration.get_email_app()
+            gmail_configuration = self.configuration.get_email_apps()[0]
             GmailEmailApp(email_address=gmail_configuration['email_address'], api_key=gmail_configuration['api_key'])
         except SMTPAuthenticationError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
@@ -35,7 +35,7 @@ class TestGmailEmailApp(unittest.TestCase):
         logger.info("Loading Dropbox with wrong credentials failed successfully.")
 
     def test_is_connected_and_exit(self):
-        gmail_configuration = self.configuration.get_email_app()
+        gmail_configuration = self.configuration.get_email_apps()[0]
         gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                                   api_key=gmail_configuration['api_key'])
         self.assertEqual(True, gmail_app.is_connected())
@@ -44,7 +44,7 @@ class TestGmailEmailApp(unittest.TestCase):
 
     def test_send_email_with_all_args(self):
         try:
-            gmail_configuration = self.configuration.get_email_app()
+            gmail_configuration = self.configuration.get_email_apps()[0]
             gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                                       api_key=gmail_configuration['api_key'])
 
@@ -64,7 +64,7 @@ class TestGmailEmailApp(unittest.TestCase):
 
     def test_send_email_with_required_args(self):
         try:
-            gmail_configuration = self.configuration.get_email_app()
+            gmail_configuration = self.configuration.get_email_apps()[0]
             gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                                       api_key=gmail_configuration['api_key'])
 
@@ -77,7 +77,7 @@ class TestGmailEmailApp(unittest.TestCase):
 
     def test_send_email_with_html(self):
         try:
-            gmail_configuration = self.configuration.get_email_app()
+            gmail_configuration = self.configuration.get_email_apps()[0]
             gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                                       api_key=gmail_configuration['api_key'])
 
@@ -91,7 +91,7 @@ class TestGmailEmailApp(unittest.TestCase):
 
     def test_send_email_with_text(self):
         try:
-            gmail_configuration = self.configuration.get_email_app()
+            gmail_configuration = self.configuration.get_email_apps()[0]
             gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                                       api_key=gmail_configuration['api_key'])
 

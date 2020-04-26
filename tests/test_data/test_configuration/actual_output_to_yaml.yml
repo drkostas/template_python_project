@@ -1,9 +1,9 @@
 cloudstore:
-  config:
+- config:
     api_key: changed_api
   type: dropbox
 datastore:
-  config:
+- config:
     db_name: db3
     hostname: changedhost
     password: pass2

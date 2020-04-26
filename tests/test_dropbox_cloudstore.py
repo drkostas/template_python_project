@@ -22,7 +22,7 @@ class TestDropboxCloudstore(unittest.TestCase):
     def test_connect(self):
         # Test the connection with the correct api key
         try:
-            cloud_store_correct_key = DropboxCloudstore(api_key=self.configuration.get_cloudstore()['api_key'])
+            cloud_store_correct_key = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
             cloud_store_correct_key.ls()
         except BadInputError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
@@ -36,7 +36,7 @@ class TestDropboxCloudstore(unittest.TestCase):
         logger.info("Loading Dropbox with wrong credentials failed successfully.")
 
     def test_upload_download(self):
-        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstore()['api_key'])
+        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
         # Upload file
         logger.info('Uploading file..')
         file_to_upload = open(os.path.join(self.test_data_path, self.file_name), 'rb').read()
@@ -52,7 +52,7 @@ class TestDropboxCloudstore(unittest.TestCase):
                          open(os.path.join(self.test_data_path, 'actual_downloaded.txt'), 'rb').read())
 
     def test_upload_delete(self):
-        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstore()['api_key'])
+        cloud_store = DropboxCloudstore(api_key=self.configuration.get_cloudstores()[0]['api_key'])
         # Upload file
         logger.info('Uploading file..')
         file_to_upload = open(os.path.join(self.test_data_path, self.file_name), 'rb').read()
@@ -100,7 +100,7 @@ class TestDropboxCloudstore(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        cloud_store = DropboxCloudstore(api_key=cls.configuration.get_cloudstore()['api_key'])
+        cloud_store = DropboxCloudstore(api_key=cls.configuration.get_cloudstores()[0]['api_key'])
         cloud_store.delete_file('/tests')
 
 
