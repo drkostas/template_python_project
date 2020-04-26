@@ -10,7 +10,7 @@ from cloudstore.dropbox_cloudstore import DropboxCloudstore
 logger = logging.getLogger('Main')
 
 
-def _setup_log(log_path: str = 'logs/out.log', debug: bool = False) -> None:
+def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
     log_path = log_path.split(sep)
     if len(log_path) > 1:
 
@@ -61,7 +61,7 @@ def main():
     :Example:
     python main.py -m run_mode_1
                    -c confs/template_conf.yml
-                   -l logs/out.log
+                   -l logs/output.log
     """
 
     # Initializing
