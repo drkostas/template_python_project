@@ -11,8 +11,8 @@
     "cloudstore": {
       "$ref": "#/definitions/cloudstore"
     },
-    "email": {
-      "$ref": "#/definitions/custom_email"
+    "email_app": {
+      "$ref": "#/definitions/email_app"
     }
   },
   "required": [
@@ -89,7 +89,7 @@
         }
       }
     },
-    "custom_email": {
+    "email_app": {
       "type": "object",
       "additionalProperties": false,
       "required": [

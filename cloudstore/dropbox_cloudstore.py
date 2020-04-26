@@ -13,7 +13,7 @@ class DropboxCloudstore(AbstractCloudstore):
 
     def __init__(self, api_key: str) -> None:
         """
-        The basic constructor. Creates a new instance of a Cloudstore using the specified credentials
+        The basic constructor. Creates a new instance of Cloudstore using the specified credentials
 
         :param api_key:
         """

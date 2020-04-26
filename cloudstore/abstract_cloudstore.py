@@ -7,7 +7,7 @@ class AbstractCloudstore(ABC):
     @abstractmethod
     def __init__(self, *args, **kwargs) -> None:
         """
-        Tha basic constructor. Creates a new instance of a Cloudstore using the specified credentials
+        Tha basic constructor. Creates a new instance of Cloudstore using the specified credentials
         """
 
         pass

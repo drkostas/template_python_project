@@ -10,13 +10,13 @@ from jsonschema import validate as validate_json_schema
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'custom_email', 'tag')
+    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag')
 
     config: Dict
     config_path: str
     datastore: Dict
     cloudstore: Dict
-    custom_email: Dict
+    email_app: Dict
     tag: str
     config_attributes: List = []
     env_variable_tag: str = '!ENV'
@@ -39,7 +39,7 @@ class Configuration:
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
-        all_config_attributes = ('datastore', 'cloudstore', 'custom_email')
+        all_config_attributes = ('datastore', 'cloudstore', 'email_app')
         for config_attribute in all_config_attributes:
             if config_attribute in self.config.keys():
                 setattr(self, config_attribute, self.config[config_attribute])
@@ -101,19 +101,19 @@ class Configuration:
         if 'datastore' in self.config_attributes:
             return self.datastore['config']
         else:
-            raise Exception('Config property datastore not set!')
+            raise ConfigurationError('Config property datastore not set!')
 
     def get_cloudstore(self) -> Dict:
         if 'cloudstore' in self.config_attributes:
             return self.cloudstore['config']
         else:
-            raise Exception('Config property cloudstore not set!')
+            raise ConfigurationError('Config property cloudstore not set!')
 
-    def get_custom_email(self) -> Dict:
-        if 'custom_email' in self.config_attributes:
-            return self.custom_email['config']
+    def get_email_app(self) -> Dict:
+        if 'email_app' in self.config_attributes:
+            return self.email_app['config']
         else:
-            raise Exception('Config property custom_email not set!')
+            raise ConfigurationError('Config property email_app not set!')
 
 
     def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:

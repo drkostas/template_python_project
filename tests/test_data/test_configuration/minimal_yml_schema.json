@@ -13,8 +13,6 @@
     }
   },
   "required": [
-    "datastore",
-    "cloudstore",
     "tag"
   ],
   "definitions": {

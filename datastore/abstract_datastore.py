@@ -8,7 +8,7 @@ class AbstractDatastore(ABC):
     @abstractmethod
     def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
         """
-        Tha basic constructor. Creates a new instance of a Datastore using the specified credentials
+        Tha basic constructor. Creates a new instance of Datastore using the specified credentials
 
         :param username:
         :param password:

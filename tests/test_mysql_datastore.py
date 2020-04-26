@@ -95,7 +95,6 @@ class TestMysqlDatastore(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    # noinspection PyArgumentList
     @classmethod
     def setUpClass(cls):
         cls._setup_log()

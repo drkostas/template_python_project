@@ -26,16 +26,12 @@ class TestConfiguration(unittest.TestCase):
 
         with self.assertRaises(ValidationError):
             logger.info('Loading the wrong Configuration..')
-            Configuration(config_src=os.path.join(self.test_data_path, 'minimal_conf_wrong.yml'),
-                          config_schema_path=os.path.join('..', 'tests', self.test_data_path,
-                                                          'minimal_yml_schema.json'))
+            Configuration(config_src=os.path.join(self.test_data_path, 'minimal_conf_wrong.yml'))
         logger.info('Second yml failed to validate successfully.')
 
     def test_to_json(self):
         logger.info('Loading Configuration..')
-        configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
-                                      config_schema_path=os.path.join('..', 'tests', self.test_data_path,
-                                                                      'yml_schema.json'))
+        configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         expected_json = {'tag': 'production',
                          'datastore': {'config':
                                            {'hostname': 'host123',
@@ -53,9 +49,7 @@ class TestConfiguration(unittest.TestCase):
 
     def test_to_yaml(self):
         logger.info('Loading Configuration..')
-        configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
-                                      config_schema_path=os.path.join('..', 'tests', self.test_data_path,
-                                                                      'yml_schema.json'))
+        configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'))
         # Modify and export yml
         logger.info('Changed the host and the api_key..')
         configuration.datastore['config']['hostname'] = 'changedhost'
@@ -65,9 +59,7 @@ class TestConfiguration(unittest.TestCase):
         # Load the modified yml
         logger.info('Loading the exported yaml..')
         modified_configuration = Configuration(
-            config_src=os.path.join(self.test_data_path, 'actual_output_to_yaml.yml'),
-            config_schema_path=os.path.join('..', 'tests', self.test_data_path,
-                                            'yml_schema.json'))
+            config_src=os.path.join(self.test_data_path, 'actual_output_to_yaml.yml'))
         # Compare
         logger.info('Comparing the results..')
         expected_json = {'tag': 'production',

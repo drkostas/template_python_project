@@ -89,7 +89,6 @@ class TestDropboxCloudstore(unittest.TestCase):
     def tearDown(self) -> None:
         os.remove(os.path.join(self.test_data_path, self.file_name))
 
-    # noinspection PyArgumentList
     @classmethod
     def setUpClass(cls):
         cls._setup_log()
@@ -97,9 +96,7 @@ class TestDropboxCloudstore(unittest.TestCase):
             logger.error('DROPBOX_API_KEY env variable is not set!')
             raise Exception('DROPBOX_API_KEY env variable is not set!')
         logger.info('Loading Configuration..')
-        cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'),
-                                          config_schema_path=os.path.join('..', 'tests', cls.test_data_path,
-                                                                          'yml_schema.json'))
+        cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'))
 
     @classmethod
     def tearDownClass(cls):
