@@ -68,7 +68,7 @@ All the installation steps are being handled by the [Makefile](Makefile).
 execute the following command:</i>
 
 ```bash
-make install server=local
+$ make install server=local
 ```
 
 <i>If you executed the previous command, you can skip through to the [Running locally](#run_locally) section.</i>

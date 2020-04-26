@@ -10,12 +10,13 @@
     },
     "cloudstore": {
       "$ref": "#/definitions/cloudstore"
+    },
+    "email": {
+      "$ref": "#/definitions/custom_email"
     }
   },
   "required": [
-    "tag",
-    "datastore",
-    "cloudstore"
+    "tag"
   ],
   "definitions": {
     "datastore": {
@@ -80,6 +81,36 @@
         "config": {
           "type": "object",
           "properties": {
+            "api_key": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    },
+    "custom_email": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "config",
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "gmail",
+            "hotmail"
+          ]
+        },
+        "config": {
+          "type": "object",
+          "properties": {
+
+            "email_address": {
+              "type": "string"
+            },
             "api_key": {
               "type": "string"
             }

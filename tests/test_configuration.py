@@ -1,5 +1,6 @@
 import unittest
 from jsonschema.exceptions import ValidationError
+from typing import Dict
 import logging
 import os
 
@@ -35,12 +36,20 @@ class TestConfiguration(unittest.TestCase):
         configuration = Configuration(config_src=os.path.join(self.test_data_path, 'template_conf.yml'),
                                       config_schema_path=os.path.join('..', 'tests', self.test_data_path,
                                                                       'yml_schema.json'))
-        expected_json = {'tag': 'production', 'datatore': {
-            'config': {'hostname': 'host123', 'username': 'user1', 'password': 'pass2', 'db_name': 'db3', 'port': 3306},
-            'type': 'mysql'}, 'cloudstore': {'config': {'api_key': 'apiqwerty'}, 'type': 'dropbox'}}
+        expected_json = {'tag': 'production',
+                         'datastore': {'config':
+                                           {'hostname': 'host123',
+                                            'username': 'user1',
+                                            'password': 'pass2',
+                                            'db_name': 'db3',
+                                            'port': 3306},
+                                       'type': 'mysql'},
+                         'cloudstore': {'config':
+                                            {'api_key': 'apiqwerty'},
+                                        'type': 'dropbox'}}
         # Compare
         logger.info('Comparing the results..')
-        self.assertDictEqual(expected_json, configuration.to_json())
+        self.assertDictEqual(self._sort_dict(expected_json), self._sort_dict(configuration.to_json()))
 
     def test_to_yaml(self):
         logger.info('Loading Configuration..')
@@ -61,11 +70,23 @@ class TestConfiguration(unittest.TestCase):
                                             'yml_schema.json'))
         # Compare
         logger.info('Comparing the results..')
-        expected_json = {'tag': 'production', 'datatore': {
-            'config': {'hostname': 'changedhost', 'username': 'user1', 'password': 'pass2', 'db_name': 'db3',
-                       'port': 3306},
-            'type': 'mysql'}, 'cloudstore': {'config': {'api_key': 'changed_api'}, 'type': 'dropbox'}}
-        self.assertDictEqual(expected_json, modified_configuration.to_json())
+        expected_json = {'tag': 'production',
+                         'datastore': {'config':
+                                           {'hostname': 'changedhost',
+                                            'username': 'user1',
+                                            'password': 'pass2',
+                                            'db_name': 'db3',
+                                            'port': 3306},
+                                       'type': 'mysql'},
+                         'cloudstore': {'config':
+                                            {'api_key': 'changed_api'},
+                                        'type': 'dropbox'}}
+        self.assertDictEqual(self._sort_dict(expected_json), self._sort_dict(modified_configuration.to_json()))
+
+    @classmethod
+    def _sort_dict(cls, dictionary: Dict) -> Dict:
+        return {k: cls._sort_dict(v) if isinstance(v, dict) else v
+                for k, v in sorted(dictionary.items())}
 
     @staticmethod
     def _setup_log(debug: bool = False) -> None:

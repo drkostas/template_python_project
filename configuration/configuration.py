@@ -1,6 +1,6 @@
 import os
 import logging
-from typing import Dict, Tuple, Union
+from typing import Dict, List, Tuple, Union
 import json
 import _io
 from io import StringIO, TextIOWrapper
@@ -10,13 +10,15 @@ from jsonschema import validate as validate_json_schema
 
 
 class Configuration:
-    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'tag')
+    __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'custom_email', 'tag')
 
     config: Dict
     config_path: str
     datastore: Dict
     cloudstore: Dict
+    custom_email: Dict
     tag: str
+    config_attributes: List = []
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
     logger = logging.getLogger('Configuration')
@@ -36,9 +38,14 @@ class Configuration:
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
         # Set the config properties as instance attributes
-        self.datastore = self.config['datastore']
-        self.cloudstore = self.config['cloudstore']
         self.tag = self.config['tag']
+        all_config_attributes = ('datastore', 'cloudstore', 'custom_email')
+        for config_attribute in all_config_attributes:
+            if config_attribute in self.config.keys():
+                setattr(self, config_attribute, self.config[config_attribute])
+                self.config_attributes.append(config_attribute)
+            else:
+                setattr(self, config_attribute, None)
 
     @staticmethod
     def load_configuration_schema(config_schema_path: str) -> Dict:
@@ -91,10 +98,23 @@ class Configuration:
         return self.__getattribute__(item)
 
     def get_datastore(self) -> Dict:
-        return self.datastore['config']
+        if 'datastore' in self.config_attributes:
+            return self.datastore['config']
+        else:
+            raise Exception('Config property datastore not set!')
 
     def get_cloudstore(self) -> Dict:
-        return self.cloudstore['config']
+        if 'cloudstore' in self.config_attributes:
+            return self.cloudstore['config']
+        else:
+            raise Exception('Config property cloudstore not set!')
+
+    def get_custom_email(self) -> Dict:
+        if 'custom_email' in self.config_attributes:
+            return self.custom_email['config']
+        else:
+            raise Exception('Config property custom_email not set!')
+
 
     def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:
         """
@@ -105,10 +125,9 @@ class Configuration:
         :return: None
         """
 
-        dict_conf = {
-            'datastore': self.datastore,
-            'cloudstore': self.cloudstore
-        }
+        dict_conf = dict()
+        for config_attribute in self.config_attributes:
+            dict_conf[config_attribute] = getattr(self, config_attribute)
         if include_tag:
             dict_conf['tag'] = self.tag
 
@@ -123,11 +142,11 @@ class Configuration:
     to_yaml = to_yml
 
     def to_json(self) -> Dict:
-        return {
-            'datatore': self.datastore,
-            'cloudstore': self.cloudstore,
-            'tag': self.tag
-        }
+        dict_conf = dict()
+        for config_attribute in self.config_attributes:
+            dict_conf[config_attribute] = getattr(self, config_attribute)
+        dict_conf['tag'] = self.tag
+        return dict_conf
 
 
 class ConfigurationError(Exception):

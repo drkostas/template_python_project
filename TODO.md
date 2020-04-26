@@ -13,8 +13,7 @@
 - [X] Continuous integration
 - [X] Heroku Procfile
 - [X] Modify Readme to match the instruction for this project
-- [ ] Gmail
-- [ ] Ssh client
+- [ ] Gmail Class
 - [ ] MongoDB/Datastore Class
 - [ ] Amazon S3/Cloudstore CLass
 - [ ] Frontend
