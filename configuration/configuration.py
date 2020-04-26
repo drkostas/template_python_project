@@ -115,7 +115,6 @@ class Configuration:
         else:
             raise ConfigurationError('Config property email_app not set!')
 
-
     def to_yml(self, fn: Union[str, _io.TextIOWrapper], include_tag=False) -> None:
         """
         Writes the configuration to a stream. For example a file.
