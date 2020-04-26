@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class AbstractEmailApp(ABC):
-    __slots__ = ('__handler__',)
+    __slots__ = ('_handler',)
 
     @abstractmethod
     def __init__(self, *args, **kwargs) -> None:
@@ -18,6 +18,18 @@ class AbstractEmailApp(ABC):
     def get_handler(*args, **kwargs):
         """
         Returns an EmailApp handler.
+
+        :param args:
+        :param kwargs:
+        :return:
+        """
+
+        pass
+
+    @abstractmethod
+    def send_email(self, *args, **kwargs):
+        """
+        Sends an email with the specified arguments.
 
         :param args:
         :param kwargs:

@@ -34,6 +34,75 @@ class TestGmailEmailApp(unittest.TestCase):
             GmailEmailApp(email_address=gmail_configuration['email_address'], api_key='wrong_key')
         logger.info("Loading Dropbox with wrong credentials failed successfully.")
 
+    def test_is_connected_and_exit(self):
+        gmail_configuration = self.configuration.get_email_app()
+        gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                                  api_key=gmail_configuration['api_key'])
+        self.assertEqual(True, gmail_app.is_connected())
+        gmail_app.__exit__()
+        self.assertEqual(False, gmail_app.is_connected())
+
+    def test_send_email_with_all_args(self):
+        try:
+            gmail_configuration = self.configuration.get_email_app()
+            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                                      api_key=gmail_configuration['api_key'])
+
+            gmail_app.send_email(subject='test_send_email_with_all_args',
+                                 to=[gmail_configuration['email_address']],
+                                 cc=[gmail_configuration['email_address']],
+                                 bcc=[gmail_configuration['email_address']],
+                                 text='Test plain/text body',
+                                 html='<h1>Test html body</h1>',
+                                 attachments=[os.path.join(self.test_data_path, 'sample_data.txt')],
+                                 sender=gmail_configuration['email_address'],
+                                 reply_to=gmail_configuration['email_address']
+                                 )
+        except Exception as e:
+            logger.error("Test failed with exception: %s" % e)
+            self.fail("Test failed with exception: %s" % e)
+
+    def test_send_email_with_required_args(self):
+        try:
+            gmail_configuration = self.configuration.get_email_app()
+            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                                      api_key=gmail_configuration['api_key'])
+
+            gmail_app.send_email(subject='test_send_email_with_required_args',
+                                 to=[gmail_configuration['email_address']]
+                                 )
+        except Exception as e:
+            logger.error("Test failed with exception: %s" % e)
+            self.fail("Test failed with exception: %s" % e)
+
+    def test_send_email_with_html(self):
+        try:
+            gmail_configuration = self.configuration.get_email_app()
+            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                                      api_key=gmail_configuration['api_key'])
+
+            gmail_app.send_email(subject='test_send_email_with_html',
+                                 to=[gmail_configuration['email_address']],
+                                 html='<h1>Html only</h1>'
+                                 )
+        except Exception as e:
+            logger.error("Test failed with exception: %s" % e)
+            self.fail("Test failed with exception: %s" % e)
+
+    def test_send_email_with_text(self):
+        try:
+            gmail_configuration = self.configuration.get_email_app()
+            gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                                      api_key=gmail_configuration['api_key'])
+
+            gmail_app.send_email(subject='test_send_email_with_text',
+                                 to=[gmail_configuration['email_address']],
+                                 text='Text only'
+                                 )
+        except Exception as e:
+            logger.error("Test failed with exception: %s" % e)
+            self.fail("Test failed with exception: %s" % e)
+
     @staticmethod
     def _generate_random_filename_and_contents() -> Tuple[str, str]:
         letters = string.ascii_lowercase
@@ -52,13 +121,9 @@ class TestGmailEmailApp(unittest.TestCase):
                             )
 
     def setUp(self) -> None:
-        # self.file_name, contents = self._generate_random_filename_and_contents()
-        # with open(os.path.join(self.test_data_path, self.file_name), 'a') as f:
-        #     f.write(contents)
         pass
 
     def tearDown(self) -> None:
-        # os.remove(os.path.join(self.test_data_path, self.file_name))
         pass
 
     @classmethod
@@ -73,8 +138,6 @@ class TestGmailEmailApp(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # cloud_store = DropboxCloudstore(api_key=cls.configuration.get_cloudstore()['api_key'])
-        # cloud_store.delete_file('/tests')
         pass
 
 

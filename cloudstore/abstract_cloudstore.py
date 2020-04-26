@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class AbstractCloudstore(ABC):
-    __slots__ = ('__handler__',)
+    __slots__ = ('_handler',)
 
     @abstractmethod
     def __init__(self, *args, **kwargs) -> None:

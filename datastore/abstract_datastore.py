@@ -3,7 +3,7 @@ from typing import List
 
 
 class AbstractDatastore(ABC):
-    __slots__ = ('__connection__', '__cursor__')
+    __slots__ = ('_connection', '_cursor')
 
     @abstractmethod
     def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
@@ -17,10 +17,10 @@ class AbstractDatastore(ABC):
         :param port:
         """
 
-        self.__connection__, self.__cursor__ = self.get_connection(username=username, password=password,
-                                                                   hostname=hostname,
-                                                                   db_name=db_name,
-                                                                   port=port)
+        self._connection, self._cursor = self.get_connection(username=username, password=password,
+                                                             hostname=hostname,
+                                                             db_name=db_name,
+                                                             port=port)
 
     @staticmethod
     @abstractmethod

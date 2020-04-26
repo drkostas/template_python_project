@@ -7,10 +7,10 @@ from .abstract_datastore import AbstractDatastore
 
 
 class MySqlDatastore(AbstractDatastore):
-    __slots__ = ('__connection__', '__cursor__')
+    __slots__ = ('_connection', '_cursor')
 
-    __connection__: mysql_connector.connection_cext.CMySQLConnection
-    __cursor__: mysql_connector.connection_cext.CMySQLCursor
+    _connection: mysql_connector.connection_cext.CMySQLConnection
+    _cursor: mysql_connector.connection_cext.CMySQLCursor
     logger = logging.getLogger('MySqlDataStore')
 
     def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int = 3306) -> None:
@@ -64,8 +64,8 @@ class MySqlDatastore(AbstractDatastore):
         """
 
         query = "CREATE TABLE IF NOT EXISTS {table} ({schema})".format(table=table, schema=schema)
-        self.__cursor__.execute(query)
-        self.__connection__.commit()
+        self._cursor.execute(query)
+        self._connection.commit()
 
     def drop_table(self, table: str) -> None:
         """
@@ -77,8 +77,8 @@ class MySqlDatastore(AbstractDatastore):
         """
 
         query = "DROP TABLE IF EXISTS {table}".format(table=table)
-        self.__cursor__.execute(query)
-        self.__connection__.commit()
+        self._cursor.execute(query)
+        self._connection.commit()
 
     def truncate_table(self, table: str) -> None:
         """
@@ -90,8 +90,8 @@ class MySqlDatastore(AbstractDatastore):
         """
 
         query = "TRUNCATE TABLE {table}".format(table=table)
-        self.__cursor__.execute(query)
-        self.__connection__.commit()
+        self._cursor.execute(query)
+        self._connection.commit()
 
     def insert_into_table(self, table: str, data: dict) -> None:
         """
@@ -107,8 +107,8 @@ class MySqlDatastore(AbstractDatastore):
             list(map(lambda key, val: "{key}='{val}'".format(key=str(key), val=str(val)), data.keys(), data.values())))
 
         query = "INSERT INTO {table} SET {data}".format(table=table, data=data_str)
-        self.__cursor__.execute(query)
-        self.__connection__.commit()
+        self._cursor.execute(query)
+        self._connection.commit()
 
     def update_table(self, table: str, set_data: dict, where: str) -> None:
         """
@@ -126,7 +126,7 @@ class MySqlDatastore(AbstractDatastore):
                      set_data.values())))
 
         query = "UPDATE {table} SET {data} WHERE {where}".format(table=table, data=set_data_str, where=where)
-        self.__cursor__.execute(query)
+        self._cursor.execute(query)
 
     def select_from_table(self, table: str, columns: str = '*', where: str = 'TRUE', order_by: str = 'NULL',
                           asc_or_desc: str = 'ASC', limit: int = 1000) -> List:
@@ -145,8 +145,8 @@ class MySqlDatastore(AbstractDatastore):
 
         query = "SELECT {columns} FROM  {table} WHERE {where} ORDER BY {order_by} {asc_or_desc} LIMIT {limit}".format(
             columns=columns, table=table, where=where, order_by=order_by, asc_or_desc=asc_or_desc, limit=limit)
-        self.__cursor__.execute(query)
-        results = self.__cursor__.fetchall()
+        self._cursor.execute(query)
+        results = self._cursor.fetchall()
 
         return results
 
@@ -161,7 +161,7 @@ class MySqlDatastore(AbstractDatastore):
         """
 
         query = "DELETE FROM {table} WHERE {where}".format(table=table, where=where)
-        self.__cursor__.execute(query)
+        self._cursor.execute(query)
 
     def show_tables(self) -> List:
         """
@@ -170,8 +170,8 @@ class MySqlDatastore(AbstractDatastore):
         """
 
         query = 'SHOW TABLES'
-        self.__cursor__.execute(query)
-        results = self.__cursor__.fetchall()
+        self._cursor.execute(query)
+        results = self._cursor.fetchall()
 
         return [result[0] for result in results]
 
@@ -182,5 +182,5 @@ class MySqlDatastore(AbstractDatastore):
         :return:
         """
 
-        self.__connection__.commit()
-        self.__cursor__.close()
+        self._connection.commit()
+        self._cursor.close()
