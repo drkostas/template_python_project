@@ -20,7 +20,10 @@
   ],
   "definitions": {
     "datastore": {
-      "type": "object",
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
       "additionalProperties": false,
       "required": [
         "type",
@@ -64,7 +67,10 @@
       }
     },
     "cloudstore": {
-      "type": "object",
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
       "additionalProperties": false,
       "required": [
         "config",
@@ -90,7 +96,10 @@
       }
     },
     "email_app": {
-      "type": "object",
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
       "additionalProperties": false,
       "required": [
         "config",
@@ -107,7 +116,6 @@
         "config": {
           "type": "object",
           "properties": {
-
             "email_address": {
               "type": "string"
             },

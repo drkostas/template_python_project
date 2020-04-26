@@ -72,11 +72,11 @@ def main():
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
     # Init the Cloudstore
-    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
+    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstores()[0]['api_key'])
     # Init the Datastore
-    data_store = MySqlDatastore(**configuration.get_datastore())
+    data_store = MySqlDatastore(**configuration.get_datastores()[0])
     # Init the Email App
-    gmail_configuration = configuration.get_email_app()
+    gmail_configuration = configuration.get_email_apps()[0]
     gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
                               api_key=gmail_configuration['api_key'])
 

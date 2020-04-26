@@ -24,7 +24,7 @@ class TestMysqlDatastore(unittest.TestCase):
     def test_connect(self):
         # Test the connection with the correct api key
         try:
-            MySqlDatastore(**self.configuration.get_datastore())
+            MySqlDatastore(**self.configuration.get_datastores()[0])
         except MsqlProgrammingError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
             self.fail('Error connecting with the correct credentials')
@@ -32,13 +32,13 @@ class TestMysqlDatastore(unittest.TestCase):
             logger.info('Connected with the correct credentials successfully.')
         # Test that the connection is failed with the wrong credentials
         with self.assertRaises(MsqlProgrammingError):
-            datastore_conf_copy = copy.deepcopy(self.configuration.get_datastore())
+            datastore_conf_copy = copy.deepcopy(self.configuration.get_datastores()[0])
             datastore_conf_copy['password'] = 'wrong_password'
             MySqlDatastore(**datastore_conf_copy)
         logger.info("Loading Mysql with wrong credentials failed successfully.")
 
     def test_create_drop(self):
-        data_store = MySqlDatastore(**self.configuration.get_datastore())
+        data_store = MySqlDatastore(**self.configuration.get_datastores()[0])
         # Create table
         logger.info('Creating table..')
         data_store.create_table(self.table_name, self.test_table_schema)
@@ -50,7 +50,7 @@ class TestMysqlDatastore(unittest.TestCase):
         self.assertNotIn(self.table_name, data_store.show_tables())
 
     def test_insert_update_delete(self):
-        data_store = MySqlDatastore(**self.configuration.get_datastore())
+        data_store = MySqlDatastore(**self.configuration.get_datastores()[0])
         # Create table
         logger.info('Creating table..')
         data_store.create_table(self.table_name, self.test_table_schema)
@@ -103,16 +103,14 @@ class TestMysqlDatastore(unittest.TestCase):
             logger.error('Mysql env variables are not set!')
             raise Exception('Mysql env variables are not set!')
         logger.info('Loading Configuration..')
-        cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'),
-                                          config_schema_path=os.path.join('..', 'tests', cls.test_data_path,
-                                                                          'yml_schema.json'))
+        cls.configuration = Configuration(config_src=os.path.join(cls.test_data_path, 'template_conf.yml'))
         cls.test_table_schema = """ order_id INT(6) PRIMARY KEY,
                                     order_type VARCHAR(30) NOT NULL,
                                     is_delivered BOOLEAN NOT NULL """
 
     @classmethod
     def tearDownClass(cls):
-        data_store = MySqlDatastore(**cls.configuration.get_datastore())
+        data_store = MySqlDatastore(**cls.configuration.get_datastores()[0])
         for table in cls.generated_table_names:
             logger.info('Dropping table {0}'.format(table))
             data_store.drop_table(table=table)

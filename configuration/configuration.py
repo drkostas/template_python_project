@@ -37,6 +37,7 @@ class Configuration:
                                                       env_pattern=self.env_variable_pattern)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
+        print(self.config)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
@@ -97,21 +98,21 @@ class Configuration:
     def __getitem__(self, item):
         return self.__getattribute__(item)
 
-    def get_datastore(self) -> Dict:
+    def get_datastores(self) -> List:
         if 'datastore' in self.config_attributes:
-            return self.datastore['config']
+            return [sub_config['config'] for sub_config in self.datastore]
         else:
             raise ConfigurationError('Config property datastore not set!')
 
-    def get_cloudstore(self) -> Dict:
+    def get_cloudstores(self) -> List:
         if 'cloudstore' in self.config_attributes:
-            return self.cloudstore['config']
+            return [sub_config['config'] for sub_config in self.cloudstore]
         else:
             raise ConfigurationError('Config property cloudstore not set!')
 
-    def get_email_app(self) -> Dict:
+    def get_email_apps(self) -> List:
         if 'email_app' in self.config_attributes:
-            return self.email_app['config']
+            return [sub_config['config'] for sub_config in self.email_app]
         else:
             raise ConfigurationError('Config property email_app not set!')
 
