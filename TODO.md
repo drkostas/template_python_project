@@ -14,7 +14,7 @@
 - [X] Heroku Procfile
 - [X] Modify Readme to match the instruction for this project
 - [X] Gmail Class
-- [ ] Support multiple occurrences in config
+- [X] Support multiple occurrences in config
 - [ ] Kafka Class
 - [ ] MongoDB/Datastore Class
 - [ ] Amazon S3/Cloudstore CLass
