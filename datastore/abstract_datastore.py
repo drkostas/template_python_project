@@ -3,12 +3,12 @@ from typing import List
 
 
 class AbstractDatastore(ABC):
-    __slots__ = ('__connection__', '__cursor__')
+    __slots__ = ('_connection', '_cursor')
 
     @abstractmethod
     def __init__(self, username: str, password: str, hostname: str, db_name: str, port: int) -> None:
         """
-        Tha basic constructor. Creates a new instance of a Datastore using the specified credentials
+        Tha basic constructor. Creates a new instance of Datastore using the specified credentials
 
         :param username:
         :param password:
@@ -17,10 +17,10 @@ class AbstractDatastore(ABC):
         :param port:
         """
 
-        self.__connection__, self.__cursor__ = self.get_connection(username=username, password=password,
-                                                                   hostname=hostname,
-                                                                   db_name=db_name,
-                                                                   port=port)
+        self._connection, self._cursor = self.get_connection(username=username, password=password,
+                                                             hostname=hostname,
+                                                             db_name=db_name,
+                                                             port=port)
 
     @staticmethod
     @abstractmethod

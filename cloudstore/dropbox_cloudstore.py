@@ -6,19 +6,19 @@ from .abstract_cloudstore import AbstractCloudstore
 
 
 class DropboxCloudstore(AbstractCloudstore):
-    __slots__ = '__handler__'
+    __slots__ = '_handler'
 
-    __handler__: Dropbox
+    _handler: Dropbox
     logger = logging.getLogger('DropboxCloudstore')
 
     def __init__(self, api_key: str) -> None:
         """
-        Tha basic constructor. Creates a new instance of a Cloudstore using the specified credentials
+        The basic constructor. Creates a new instance of Cloudstore using the specified credentials
 
         :param api_key:
         """
 
-        self.__handler__ = self.get_handler(api_key=api_key)
+        self._handler = self.get_handler(api_key=api_key)
         super().__init__()
 
     @staticmethod
@@ -44,7 +44,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
 
         try:
-            self.__handler__.files_upload(f=file_stream, path=upload_path, mode=files.WriteMode(write_mode))
+            self._handler.files_upload(f=file_stream, path=upload_path, mode=files.WriteMode(write_mode))
         except exceptions.ApiError as err:
             print('*** API error', err)
 
@@ -59,9 +59,9 @@ class DropboxCloudstore(AbstractCloudstore):
 
         try:
             if tofile is not None:
-                self.__handler__.files_download_to_file(download_path=tofile, path=frompath)
+                self._handler.files_download_to_file(download_path=tofile, path=frompath)
             else:
-                md, res = self.__handler__.files_download(path=frompath)
+                md, res = self._handler.files_download(path=frompath)
                 data = res.content  # The bytes of the file
                 return data
         except exceptions.HttpError as err:
@@ -77,7 +77,7 @@ class DropboxCloudstore(AbstractCloudstore):
         """
 
         try:
-            self.__handler__.files_delete_v2(path=file_path)
+            self._handler.files_delete_v2(path=file_path)
         except exceptions.ApiError as err:
             print('*** API error', err)
 
@@ -89,7 +89,7 @@ class DropboxCloudstore(AbstractCloudstore):
         :return:
         """
         try:
-            files_list = self.__handler__.files_list_folder(path=path)
+            files_list = self._handler.files_list_folder(path=path)
             files_dict = {}
             for entry in files_list.entries:
                 files_dict[entry.name] = entry

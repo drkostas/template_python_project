@@ -2,13 +2,12 @@ from abc import ABC, abstractmethod
 
 
 class AbstractCloudstore(ABC):
-    __slots__ = ('__handler__',)
+    __slots__ = ('_handler',)
 
     @abstractmethod
     def __init__(self, *args, **kwargs) -> None:
         """
-        Tha basic constructor. Creates a new instance of a Cloudstore using the specified credentials
-
+        Tha basic constructor. Creates a new instance of Cloudstore using the specified credentials
         """
 
         pass

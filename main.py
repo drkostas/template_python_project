@@ -1,24 +1,25 @@
 import traceback
 import logging
 import argparse
-from os import makedirs, sep
+import os
 
 from configuration.configuration import Configuration
 from datastore.mysql_datastore import MySqlDatastore
 from cloudstore.dropbox_cloudstore import DropboxCloudstore
+from email_app.gmail_email_app import GmailEmailApp
 
 logger = logging.getLogger('Main')
 
 
-def _setup_log(log_path: str = 'logs/out.log', debug: bool = False) -> None:
-    log_path = log_path.split(sep)
+def _setup_log(log_path: str = 'logs/output.log', debug: bool = False) -> None:
+    log_path = log_path.split(os.sep)
     if len(log_path) > 1:
 
         try:
-            makedirs((sep.join(log_path[:-1])))
+            os.makedirs((os.sep.join(log_path[:-1])))
         except FileExistsError:
             pass
-    log_filename = sep.join(log_path)
+    log_filename = os.sep.join(log_path)
     # noinspection PyArgumentList
     logging.basicConfig(level=logging.INFO if debug is not True else logging.DEBUG,
                         format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
@@ -61,7 +62,7 @@ def main():
     :Example:
     python main.py -m run_mode_1
                    -c confs/template_conf.yml
-                   -l logs/out.log
+                   -l logs/output.log
     """
 
     # Initializing
@@ -74,6 +75,10 @@ def main():
     cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstore()['api_key'])
     # Init the Datastore
     data_store = MySqlDatastore(**configuration.get_datastore())
+    # Init the Email App
+    gmail_configuration = configuration.get_email_app()
+    gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
+                              api_key=gmail_configuration['api_key'])
 
     # Mysql examples
     logger.info("\n\nMYSQL EXAMPLE\n-------------------------")
@@ -113,6 +118,27 @@ def main():
     logger.info("Deleting file {file}..".format(file=upload_path))
     logger.info(
         "List of files in Dropbox /python_template:\n{0}".format(list(cloud_store.ls(path='/python_template').keys())))
+
+    # Gmail examples
+    logger.info("\n\nGMAIL EXAMPLE\n-------------------------")
+    subject = "Email example"
+    body = "<h1>This is an html body example</h1><br><b>This goes to the html argument. " \
+           "You can use the text argument for plain text.</b>"
+    emails_list = [gmail_configuration['email_address']]
+    attachments_paths = [os.path.join('data', 'sample_data.txt')]
+    logger.info(
+        "Sending email with `subject` = `{subject}`, `from,to,cc,bcc,reply_to` = `{email_addr}`, "
+        "`html` = `{body}` and `attachments` = `{attachments}`".format(
+            subject=subject, email_addr=emails_list[0], body=body, attachments=attachments_paths))
+    gmail_app.send_email(subject=subject,
+                         to=emails_list,
+                         cc=emails_list,
+                         bcc=emails_list,
+                         html=body,
+                         attachments=attachments_paths,
+                         sender=emails_list[0],
+                         reply_to=emails_list[0]
+                         )
 
 
 if __name__ == '__main__':
