@@ -37,7 +37,6 @@ class Configuration:
                                                       env_pattern=self.env_variable_pattern)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
-        print(self.config)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
@@ -82,12 +81,15 @@ class Configuration:
         loader.add_constructor(env_tag, constructor_env_variables)
 
         if isinstance(config_src, TextIOWrapper):
+            logging.debug("Loading yaml from TextIOWrapper")
             config = yaml.load(config_src, Loader=loader)
             config_path = config_src.name
         elif isinstance(config_src, StringIO):
+            logging.debug("Loading yaml from StringIO")
             config = yaml.load(config_src, Loader=loader)
             config_path = "StringIO"
         elif isinstance(config_src, str):
+            logging.debug("Loading yaml from path")
             with open(config_src) as f:
                 config = yaml.load(f, Loader=loader)
             config_path = config_src

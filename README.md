@@ -279,7 +279,6 @@ Read the [TODO](TODO.md) to see the current task list.
 
 ## Built With <a name = "built_with"></a>
 
-* [SQLAlchemy](https://pypi.org/project/SQLAlchemy/) - Used for the Datastore Class
 * [Dropbpox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
 * [Gmail Sender](https://github.com/paulc/gmail-sender) - Used for the EmailApp Class
 * [Heroku](https://www.heroku.com) - The deployment environment
