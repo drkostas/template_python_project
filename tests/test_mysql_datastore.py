@@ -24,7 +24,7 @@ class TestMysqlDatastore(unittest.TestCase):
     def test_connect(self):
         # Test the connection with the correct api key
         try:
-            MySqlDatastore(**self.configuration.get_datastores()[0])
+            MySqlDatastore(config=self.configuration.get_datastores()[0])
         except MsqlProgrammingError as e:
             logger.error('Error connecting with the correct credentials: %s', e)
             self.fail('Error connecting with the correct credentials')
@@ -34,11 +34,11 @@ class TestMysqlDatastore(unittest.TestCase):
         with self.assertRaises(MsqlProgrammingError):
             datastore_conf_copy = copy.deepcopy(self.configuration.get_datastores()[0])
             datastore_conf_copy['password'] = 'wrong_password'
-            MySqlDatastore(**datastore_conf_copy)
+            MySqlDatastore(config=datastore_conf_copy)
         logger.info("Loading Mysql with wrong credentials failed successfully.")
 
     def test_create_drop(self):
-        data_store = MySqlDatastore(**self.configuration.get_datastores()[0])
+        data_store = MySqlDatastore(config=self.configuration.get_datastores()[0])
         # Create table
         logger.info('Creating table..')
         data_store.create_table(self.table_name, self.test_table_schema)
@@ -50,7 +50,7 @@ class TestMysqlDatastore(unittest.TestCase):
         self.assertNotIn(self.table_name, data_store.show_tables())
 
     def test_insert_update_delete(self):
-        data_store = MySqlDatastore(**self.configuration.get_datastores()[0])
+        data_store = MySqlDatastore(config=self.configuration.get_datastores()[0])
         # Create table
         logger.info('Creating table..')
         data_store.create_table(self.table_name, self.test_table_schema)
@@ -81,7 +81,7 @@ class TestMysqlDatastore(unittest.TestCase):
     @staticmethod
     def _setup_log(debug: bool = False) -> None:
         # noinspection PyArgumentList
-        logging.basicConfig(level=logging.INFO if debug is not True else logging.DEBUG,
+        logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                             datefmt='%Y-%m-%d %H:%M:%S',
                             handlers=[logging.StreamHandler()
@@ -110,7 +110,7 @@ class TestMysqlDatastore(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        data_store = MySqlDatastore(**cls.configuration.get_datastores()[0])
+        data_store = MySqlDatastore(config=cls.configuration.get_datastores()[0])
         for table in cls.generated_table_names:
             logger.info('Dropping table {0}'.format(table))
             data_store.drop_table(table=table)
