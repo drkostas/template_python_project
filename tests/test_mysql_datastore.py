@@ -79,7 +79,7 @@ class TestMysqlDatastore(unittest.TestCase):
         return file_name
 
     @staticmethod
-    def _setup_log(debug: bool = False) -> None:
+    def _setup_log() -> None:
         # noinspection PyArgumentList
         logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',

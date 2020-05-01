@@ -37,7 +37,7 @@ def _argparser() -> argparse.Namespace:
         description='A template for python projects.',
         add_help=False)
     # Required Args
-    required_arguments = parser.add_argument_group('required arguments')
+    required_arguments = parser.add_argument_group('Required Arguments')
     config_file_params = {
         'type': argparse.FileType('r'),
         'required': True,
@@ -50,8 +50,8 @@ def _argparser() -> argparse.Namespace:
     required_arguments.add_argument('-c', '--config-file', **config_file_params)
     required_arguments.add_argument('-l', '--log', help="Name of the output log file")
     # Optional args
-    optional = parser.add_argument_group('optional arguments')
-    optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
+    optional = parser.add_argument_group('Optional Arguments')
+    optional.add_argument('-d', '--debug', action='store_true', help='Enables the debug log messages')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
 
     return parser.parse_args()
