@@ -199,7 +199,7 @@ email_app:
   type: gmail
 ```
 
-The `!ENV` flag indicates that a envirnonmental value follows. 
+The `!ENV` flag indicates that a environmental value follows. 
 You can change the values/environmental var names as you wish.
 If a yaml variable name is changed/added/deleted, the corresponding changes should be reflected 
 on the [Configuration class](configuration/configuration.py) and the [yml_schema.json](configuration/yml_schema.json) too.
