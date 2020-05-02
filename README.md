@@ -47,6 +47,18 @@ echo $SHELL
 /usr/bin/zsh
 ```
 
+You will also need to setup the following:
+- Gmail: An application-specific password for your Google account. 
+[Reference 1](https://support.google.com/mail/?p=InvalidSecondFactor), 
+[Reference 2](https://security.google.com/settings/security/apppasswords) 
+- Dropbox: An Api key for your Dropbox account. 
+[Reference 1](http://99rabbits.com/get-dropbox-access-token/), 
+[Reference 2](https://dropbox.tech/developers/generate-an-access-token-for-your-own-account) 
+- MySql: If you haven't any, you can create a free one on Amazon RDS. 
+[Reference 1](https://aws.amazon.com/rds/free/), 
+[Reference 2](https://bigdataenthusiast.wordpress.com/2016/03/05/aws-rds-instance-setup-oracle-db-on-cloud-free-tier/) 
+
+
 ### Set the required environment variables <a name = "env_variables"></a>
 
 In order to run the [main.py](main.py) or the tests you will need to set the following 
@@ -199,7 +211,7 @@ email_app:
   type: gmail
 ```
 
-The `!ENV` flag indicates that a envirnonmental value follows. 
+The `!ENV` flag indicates that a environmental value follows. 
 You can change the values/environmental var names as you wish.
 If a yaml variable name is changed/added/deleted, the corresponding changes should be reflected 
 on the [Configuration class](configuration/configuration.py) and the [yml_schema.json](configuration/yml_schema.json) too.
@@ -218,7 +230,7 @@ $ which python
 (venv) 
 ```
 
-Now, in order to run the code you can either call the `main.py` direclty, or the `template_python_project` console script.
+Now, in order to run the code you can either call the `main.py` directly, or the `template_python_project` console script.
 
 ```bash
 $ python main.py --help
@@ -279,8 +291,7 @@ Read the [TODO](TODO.md) to see the current task list.
 
 ## Built With <a name = "built_with"></a>
 
-* [SQLAlchemy](https://pypi.org/project/SQLAlchemy/) - Used for the Datastore Class
-* [Dropbpox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
+* [Dropbox Python API](https://www.dropbox.com/developers/documentation/python) - Used for the Cloudstore Class
 * [Gmail Sender](https://github.com/paulc/gmail-sender) - Used for the EmailApp Class
 * [Heroku](https://www.heroku.com) - The deployment environment
 * [CircleCI](https://www.circleci.com/) - Continuous Integration service
@@ -292,5 +303,5 @@ This project is licensed under the GNU License - see the [LICENSE](LICENSE) file
 
 ## Acknowledgments <a name = "acknowledgments"></a>
 
-* Thanks το PurpleBooth fort the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* Thanks το PurpleBooth for the [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
 

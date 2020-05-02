@@ -37,7 +37,7 @@ def _argparser() -> argparse.Namespace:
         description='A template for python projects.',
         add_help=False)
     # Required Args
-    required_arguments = parser.add_argument_group('required arguments')
+    required_arguments = parser.add_argument_group('Required Arguments')
     config_file_params = {
         'type': argparse.FileType('r'),
         'required': True,
@@ -50,8 +50,8 @@ def _argparser() -> argparse.Namespace:
     required_arguments.add_argument('-c', '--config-file', **config_file_params)
     required_arguments.add_argument('-l', '--log', help="Name of the output log file")
     # Optional args
-    optional = parser.add_argument_group('optional arguments')
-    optional.add_argument('-d', '--debug', action='store_true', help='enables the debug log messages')
+    optional = parser.add_argument_group('Optional Arguments')
+    optional.add_argument('-d', '--debug', action='store_true', help='Enables the debug log messages')
     optional.add_argument("-h", "--help", action="help", help="Show this help message and exit")
 
     return parser.parse_args()
@@ -72,13 +72,12 @@ def main():
     # Load the configuration
     configuration = Configuration(config_src=args.config_file)
     # Init the Cloudstore
-    cloud_store = DropboxCloudstore(api_key=configuration.get_cloudstores()[0]['api_key'])
+    cloud_store = DropboxCloudstore(config=configuration.get_cloudstores()[0])
     # Init the Datastore
     data_store = MySqlDatastore(**configuration.get_datastores()[0])
     # Init the Email App
     gmail_configuration = configuration.get_email_apps()[0]
-    gmail_app = GmailEmailApp(email_address=gmail_configuration['email_address'],
-                              api_key=gmail_configuration['api_key'])
+    gmail_app = GmailEmailApp(config=configuration.get_email_apps()[0])
 
     # Mysql examples
     logger.info("\n\nMYSQL EXAMPLE\n-------------------------")
@@ -109,7 +108,7 @@ def main():
     upload_path = "/python_template/file1.txt"
     file_content = "test file content"
     logger.info("Uploading file {file} with content:\n{content}".format(file=upload_path, content=file_content))
-    cloud_store.upload_file(file_stream=file_content.encode(), upload_path=upload_path)
+    cloud_store.upload_file(file_bytes=file_content.encode(), upload_path=upload_path)
     logger.info(
         "List of files in Dropbox /python_template:\n{0}".format(list(cloud_store.ls(path='/python_template').keys())))
     downloaded_file = cloud_store.download_file(frompath=upload_path)

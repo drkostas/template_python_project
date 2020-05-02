@@ -27,7 +27,7 @@ setup(
     name='template_python_project',
     version='0.1',
     # package_dir={'': '.'},
-    packages=['datastore', 'cloudstore', 'configuration'],
+    packages=['datastore', 'cloudstore', 'configuration', 'email_app'],
     py_modules=['main'],
     data_files=[('', ['configuration/yml_schema.json'])],
     entry_points={

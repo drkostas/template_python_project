@@ -81,9 +81,9 @@ class TestConfiguration(unittest.TestCase):
                 for k, v in sorted(dictionary.items())}
 
     @staticmethod
-    def _setup_log(debug: bool = False) -> None:
+    def _setup_log() -> None:
         # noinspection PyArgumentList
-        logging.basicConfig(level=logging.INFO if debug is not True else logging.DEBUG,
+        logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                             datefmt='%Y-%m-%d %H:%M:%S',
                             handlers=[logging.StreamHandler()

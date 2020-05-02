@@ -8,6 +8,8 @@ import re
 import yaml
 from jsonschema import validate as validate_json_schema
 
+logger = logging.getLogger('Configuration')
+
 
 class Configuration:
     __slots__ = ('config', 'config_path', 'datastore', 'cloudstore', 'email_app', 'tag')
@@ -21,23 +23,24 @@ class Configuration:
     config_attributes: List = []
     env_variable_tag: str = '!ENV'
     env_variable_pattern: str = r'.*?\${(\w+)}.*?'  # ${var}
-    logger = logging.getLogger('Configuration')
 
     def __init__(self, config_src: Union[TextIOWrapper, StringIO, str], config_schema_path: str = 'yml_schema.json'):
         """
         Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
 
         :param config_src:
+        :param config_schema_path:
         """
 
         # Load the predefined schema of the configuration
         configuration_schema = self.load_configuration_schema(config_schema_path=config_schema_path)
         # Load the configuration
-        self.config, self.config_path = self.load_yml(config_src=config_src, env_tag=self.env_variable_tag,
+        self.config, self.config_path = self.load_yml(config_src=config_src,
+                                                      env_tag=self.env_variable_tag,
                                                       env_pattern=self.env_variable_pattern)
+        logger.debug("Loaded config: %s" % self.config)
         # Validate the config
         validate_json_schema(self.config, configuration_schema)
-        print(self.config)
         # Set the config properties as instance attributes
         self.tag = self.config['tag']
         all_config_attributes = ('datastore', 'cloudstore', 'email_app')
@@ -82,21 +85,21 @@ class Configuration:
         loader.add_constructor(env_tag, constructor_env_variables)
 
         if isinstance(config_src, TextIOWrapper):
+            logging.debug("Loading yaml from TextIOWrapper")
             config = yaml.load(config_src, Loader=loader)
             config_path = config_src.name
         elif isinstance(config_src, StringIO):
+            logging.debug("Loading yaml from StringIO")
             config = yaml.load(config_src, Loader=loader)
             config_path = "StringIO"
         elif isinstance(config_src, str):
+            logging.debug("Loading yaml from path")
             with open(config_src) as f:
                 config = yaml.load(f, Loader=loader)
             config_path = config_src
         else:
             raise TypeError('Config file must be TextIOWrapper or path to a file')
         return config, config_path
-
-    def __getitem__(self, item):
-        return self.__getattribute__(item)
 
     def get_datastores(self) -> List:
         if 'datastore' in self.config_attributes:
@@ -128,6 +131,7 @@ class Configuration:
         dict_conf = dict()
         for config_attribute in self.config_attributes:
             dict_conf[config_attribute] = getattr(self, config_attribute)
+
         if include_tag:
             dict_conf['tag'] = self.tag
 
@@ -147,6 +151,9 @@ class Configuration:
             dict_conf[config_attribute] = getattr(self, config_attribute)
         dict_conf['tag'] = self.tag
         return dict_conf
+
+    def __getitem__(self, item):
+        return self.__getattribute__(item)
 
 
 class ConfigurationError(Exception):
