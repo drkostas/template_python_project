@@ -26,7 +26,7 @@ class Configuration:
 
     def __init__(self, config_src: Union[TextIOWrapper, StringIO, str], config_schema_path: str = 'yml_schema.json'):
         """
-        Tha basic constructor. Creates a new instance of a MySQL Datastore using the specified credentials
+       The basic constructor. Creates a new instance of the Configuration class.
 
         :param config_src:
         :param config_schema_path:
